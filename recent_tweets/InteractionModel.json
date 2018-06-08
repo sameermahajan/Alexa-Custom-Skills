@@ -1,0 +1,38 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "recent tweets",
+            "intents": [
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "ReadTweetsIntent",
+                    "slots": [
+                        {
+                            "name": "count",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "read {count}"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}
