@@ -1,12 +1,2 @@
-# Alexa-Custom-Skills
-
-You will need flask (http://flask.pocoo.org/) and flask ask (https://github.com/johnwheeler/flask-ask) for these. You can install both by using simply pip
-
-pip install Flask
-
-pip install flask-ask 
-
-
-Recent Tweets Custom Skill
-
-Request recent N tweets. Alexa gets these from your twitter account and reads out the user names and content of these to you.
+Custom Skills can be either hosted on AWS lambda or they can be on prem  using flask-ask. Folder 'lambda' has lambda based skills whereas folder 'flask-ask'
+has flask-ask based skills.
