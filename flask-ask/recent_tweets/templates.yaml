@@ -1,0 +1,3 @@
+welcome: Welcome to Sameer's Alexa custom skill for reading recent N tweets. How many tweets would you like to read?
+
+summary: Recent {{ count }} tweets are {{ msg }}
