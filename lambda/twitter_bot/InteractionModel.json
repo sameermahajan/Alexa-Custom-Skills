@@ -1,0 +1,103 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "twitter bot",
+            "intents": [
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "GetLocationTrends",
+                    "slots": [
+                        {
+                            "name": "location",
+                            "type": "AMAZON.LITERAL"
+                        },
+                        {
+                       {
+                           "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "get {count} trends for {San fransisco|location}",
+                        "get {count} trends for {Nagpur|location}",
+                        "get {count} trends for {Pune|location}"
+                    ]
+                },
+                {
+                    "name": "GetTweetsOnTopic",
+                    "slots": [
+                        {
+                            "name": "count",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "topic",
+                            "type": "AMAZON.LITERAL"
+                        }
+                    ],
+                    "samples": [
+                        "get {count} tweets on {DeepLearning|topic}",
+                        "get {count} tweets on {MachineLearning|topic}"
+                    ]
+                },
+                {
+                    "name": "GetTweetsFromHandle",
+                    "slots": [
+                        {
+                            "name": "count",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "handle",
+                            "type": "AMAZON.LITERAL"
+                        }
+						                    ],
+                    "samples": [
+                        "get {count} tweets from {gslab|handle}",
+                        "get {count} tweets from {sameermahajan|handle}"
+                    ]
+                },
+                {
+                    "name": "GetRecentTweets",
+                    "slots": [
+                        {
+                            "name": "count",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "get {count} tweets"
+                    ]
+                },
+                {
+                    "name": "GetUserDetails",
+                    "slots": [
+                        {
+                            "name": "handle",
+                            "type": "AMAZON.LITERAL"
+                        }
+                    ],
+                    "samples": [
+                        "get details of {gslab|handle}",
+                        "get details of {sameermahajan|handle}"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}
