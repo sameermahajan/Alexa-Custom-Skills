@@ -38,9 +38,7 @@ def get_welcome_response():
                         get user details \
                     </speak>"
     reprompt_text = "<speak> Please state what you would like to do now. </speak>"
-    should_end_session = False
-    return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
+    return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, False))
 
 def on_intent(intent_request, session):
     intent = intent_request["intent"]
@@ -68,116 +66,136 @@ def on_intent(intent_request, session):
     return build_response({}, build_speechlet_response("", msg, "", True))
         
 def get_location_trends(intent):
-    location = intent["slots"]["location"]["value"]
-    count = int(intent["slots"]["count"]["value"])
-    twitter = Twitter(auth=oauth)
-    world_trends = twitter.trends.available(_woeid=1)
-    woeid = 2295412
+    try:
+        location = intent["slots"]["location"]["value"]
+        count = int(intent["slots"]["count"]["value"])
+        twitter = Twitter(auth=oauth)
+        world_trends = twitter.trends.available(_woeid=1)
+        woeid = 2295412
     
-    for trend in world_trends:
-        if trend['name'] == location:
-	        woeid = trend['woeid']
+        for trend in world_trends:
+            if trend['name'] == location:
+	            woeid = trend['woeid']
 
-    trends = twitter.trends.place(_id = woeid)[0]['trends']
+        trends = twitter.trends.place(_id = woeid)[0]['trends']
 
-    # Sort descending based on tweet_volume
+        # Sort descending based on tweet_volume
 
-    trends_dict = {}
+        trends_dict = {}
 	
-    for trend in trends:
-        if trend['tweet_volume']:
-            trends_dict[trend['name']] = int(trend['tweet_volume'])
+        for trend in trends:
+            if trend['tweet_volume']:
+                trends_dict[trend['name']] = int(trend['tweet_volume'])
 
-    d_descending = OrderedDict(sorted(trends_dict.items(), key=lambda x: (-x[1], x[0])))
+        d_descending = OrderedDict(sorted(trends_dict.items(), key=lambda x: (-x[1], x[0])))
     
-    msg = "<speak> " + str(count) + " trends for " + location + " are "
+        msg = "<speak> " + str(count) + " trends for " + location + " are "
 
-    for key in d_descending:
-        count -= 1
-        msg += key + " <break time='1s'/> "
-        if count <= 0:
-            break
+        for key in d_descending:
+            count -= 1
+            msg += key + " <break time='1s'/> "
+            if count <= 0:
+                break
 
-    msg += "</speak>"
-    return build_response({}, build_speechlet_response("", msg, "", False))
+        msg += "</speak>"
+        return build_response({}, build_speechlet_response("", msg, "", True))
+    except:
+        pass
+    return get_welcome_response()
 
 def get_topic_tweets(intent):
-    count = int(intent["slots"]["count"]["value"])
-    topic = intent["slots"]["topic"]["value"]
-    twitter = Twitter(auth=oauth)
-    tweets = twitter.search.tweets(q=topic, result_type='recent', count=count)['statuses']
+    try:
+        count = int(intent["slots"]["count"]["value"])
+        topic = intent["slots"]["topic"]["value"]
+        twitter = Twitter(auth=oauth)
+        tweets = twitter.search.tweets(q=topic, result_type='recent', count=count)['statuses']
 	
-    msg = "<speak> recent " + str(count) + " tweets on " + topic + " are <break time='1s'/>"
-    for tweet in tweets:
-        count -= 1
-        try:
-            msg += " user name is " + tweet['user']['name']
-            msg += " tweet is " + tweet['text'] + " <break time='1s'/> "
-        except:
-            continue
-        if count <= 0:
-            break
+        msg = "<speak> recent " + str(count) + " tweets on " + topic + " are <break time='1s'/>"
+        for tweet in tweets:
+            count -= 1
+            try:
+                msg += " user name is " + tweet['user']['name']
+                msg += " tweet is " + tweet['text'] + " <break time='1s'/> "
+            except:
+                continue
+            if count <= 0:
+                break
 
-    msg += "</speak>"
-    return build_response({}, build_speechlet_response("", msg, "", False))
+        msg += "</speak>"
+        return build_response({}, build_speechlet_response("", msg, "", True))
+    except:
+        pass
+    return get_welcome_response()
 
 def get_handle_tweets(intent):
-    handle = intent["slots"]["handle"]["value"]
-    count = int(intent["slots"]["count"]["value"])
-    twitter = Twitter(auth=oauth)
-    tweets = twitter.statuses.user_timeline(screen_name=handle)
+    try:
+        handle = intent["slots"]["handle"]["value"]
+        count = int(intent["slots"]["count"]["value"])
+        twitter = Twitter(auth=oauth)
+        tweets = twitter.statuses.user_timeline(screen_name=handle)
 
-    msg = "<speak> " + str(count) + " tweets from " + handle + " are <break time='1s'/>"
+        msg = "<speak> " + str(count) + " tweets from " + handle + " are <break time='1s'/>"
 
-    for tweet in tweets:
-        count -= 1
-        msg += "tweet is " + tweet['text'] + " <break time='1s'/> "
-        # print (tweet['text'].encode("utf-8"))
-        if count <= 0:
-            break
+        for tweet in tweets:
+            count -= 1
+            msg += "tweet is " + tweet['text'] + " <break time='1s'/> "
+            # print (tweet['text'].encode("utf-8"))
+            if count <= 0:
+                break
 
-    msg += "</speak>"
-    return build_response({}, build_speechlet_response("", msg, "", False))
+        msg += "</speak>"
+        return build_response({}, build_speechlet_response("", msg, "", True))
+    except:
+        pass
+    return get_welcome_response()
 
 def get_recent_tweets(intent):
-    count = int(intent["slots"]["count"]["value"])
+    try:
+        count = int(intent["slots"]["count"]["value"])
 
-    # Initiate the connection to Twitter Streaming API
+        # Initiate the connection to Twitter Streaming API
 
-    twitter_stream = TwitterStream(auth=oauth)
+        twitter_stream = TwitterStream(auth=oauth)
 
-    # Get a sample of the public data following through Twitter
+        # Get a sample of the public data following through Twitter
 
-    iterator = twitter_stream.statuses.sample()
+        iterator = twitter_stream.statuses.sample()
     
-    msg = "<speak> recent " + str(count) + " tweets are <break time='1s'/>"
-    for tweet in iterator:
-        count -= 1
-        try:
-            if 'text' in tweet: # only messages contains 'text' field is a tweet
-                msg += "user name is " + tweet['user']['name']
-                msg += "tweet is " + tweet['text'] + " <break time='1s'/> "
-        except:
-            continue
-        if count <= 0:
-            break
+        msg = "<speak> recent " + str(count) + " tweets are <break time='1s'/>"
+        for tweet in iterator:
+            count -= 1
+            try:
+                if 'text' in tweet: # only messages contains 'text' field is a tweet
+                    msg += "user name is " + tweet['user']['name']
+                    msg += "tweet is " + tweet['text'] + " <break time='1s'/> "
+            except:
+                continue
+            if count <= 0:
+                break
         
-    msg += "</speak>"
-    return build_response({}, build_speechlet_response("", msg, "", False))
+        msg += "</speak>"
+        return build_response({}, build_speechlet_response("", msg, "", True))
+    except:
+        pass
+    return get_welcome_response()
 
 def get_user_details(intent):
-    handle = intent["slots"]["handle"]["value"]
-    twitter = Twitter(auth=oauth)
-    users = twitter.users.search(q = handle)
-    msg = "<speak> users for handle " + handle + " are <break time='1s'/>"
+    try:
+        handle = intent["slots"]["handle"]["value"]
+        twitter = Twitter(auth=oauth)
+        users = twitter.users.search(q = handle)
+        msg = "<speak> users for handle " + handle + " are <break time='1s'/>"
     
-    for user in users:
-        msg += " name is " + user['name'] + " having " + str(user['followers_count']) + " followers following " + str(user['friends_count']) + " handles "
-        msg += " with " + str(user['statuses_count']) + " tweets located in " + user['location'] + " with " + str(user['favourites_count'])
-        msg += " likes and joined on " + str(user['created_at']) + " <break time='1s'/> "
+        for user in users:
+            msg += " name is " + user['name'] + " having " + str(user['followers_count']) + " followers following " + str(user['friends_count']) + " handles "
+            msg += " with " + str(user['statuses_count']) + " tweets located in " + user['location'] + " with " + str(user['favourites_count'])
+            msg += " likes and joined on " + str(user['created_at']) + " <break time='1s'/> "
     
-    msg += "</speak>"
-    return build_response({}, build_speechlet_response("", msg, "", False))
+        msg += "</speak>"
+        return build_response({}, build_speechlet_response("", msg, "", True))
+    except:
+        pass
+    return get_welcome_response()
 
 def build_speechlet_response(title, output, reprompt_text, should_end_session):
     return {
