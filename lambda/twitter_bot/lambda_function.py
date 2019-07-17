@@ -8,10 +8,10 @@ from collections import OrderedDict
 # Get these from: https://apps.twitter.com/
 # You can read more details about it at: http://socialmedia-class.org/twittertutorial.html
 
-ACCESS_TOKEN = '...'
-ACCESS_SECRET = '...'
-CONSUMER_KEY = '...'
-CONSUMER_SECRET = '...'
+ACCESS_TOKEN = '....'
+ACCESS_SECRET = '....'
+CONSUMER_KEY = '....'
+CONSUMER_SECRET = '....'
 
 oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 	
@@ -26,8 +26,6 @@ def on_launch(launch_request, session):
     return get_welcome_response()
 
 def get_welcome_response():
-    session_attributes = {}
-    card_title = ""
     speech_output = "<speak> \
                         Welcome to Sameer's lambda based alexa custom skill for twitter. <break time='1s'/> \
                         What would you like to do now? <break time='1s'/> \
@@ -38,7 +36,7 @@ def get_welcome_response():
                         get user details \
                     </speak>"
     reprompt_text = "<speak> Please state what you would like to do now. </speak>"
-    return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, False))
+    return build_response({}, build_speechlet_response("", speech_output, reprompt_text, False))
 
 def on_intent(intent_request, session):
     intent = intent_request["intent"]
@@ -62,6 +60,9 @@ def on_intent(intent_request, session):
                 </speak>"
     elif intent_name == "AMAZON.HelpIntent":
         return get_welcome_response()
+    elif intent_name == "AMAZON.FallbackIntent":
+        return build_response({}, build_speechlet_response("", "<speak> Hhhmmm. I did not understand that. </speak>", 
+            "<speak> Please state what you would like to do now. </speak>", False))
 
     return build_response({}, build_speechlet_response("", msg, "", True))
         
@@ -69,6 +70,8 @@ def get_location_trends(intent):
     try:
         location = intent["slots"]["location"]["value"]
         count = int(intent["slots"]["count"]["value"])
+        if count > 50:
+            count = 50
         twitter = Twitter(auth=oauth)
         world_trends = twitter.trends.available(_woeid=1)
         woeid = 2295412
@@ -106,6 +109,8 @@ def get_location_trends(intent):
 def get_topic_tweets(intent):
     try:
         count = int(intent["slots"]["count"]["value"])
+        if count > 20:
+            count = 20
         topic = intent["slots"]["topic"]["value"]
         twitter = Twitter(auth=oauth)
         tweets = twitter.search.tweets(q=topic, result_type='recent', count=count)['statuses']
@@ -131,6 +136,8 @@ def get_handle_tweets(intent):
     try:
         handle = intent["slots"]["handle"]["value"]
         count = int(intent["slots"]["count"]["value"])
+        if count > 20:
+            count = 20
         twitter = Twitter(auth=oauth)
         tweets = twitter.statuses.user_timeline(screen_name=handle)
 
@@ -152,6 +159,8 @@ def get_handle_tweets(intent):
 def get_recent_tweets(intent):
     try:
         count = int(intent["slots"]["count"]["value"])
+        if count > 20:
+            count = 20
 
         # Initiate the connection to Twitter Streaming API
 
@@ -185,11 +194,16 @@ def get_user_details(intent):
         twitter = Twitter(auth=oauth)
         users = twitter.users.search(q = handle)
         msg = "<speak> users for handle " + handle + " are <break time='1s'/>"
+        # cap user count at 20
+        count = 20
     
         for user in users:
+            count -= 1
             msg += " name is " + user['name'] + " having " + str(user['followers_count']) + " followers following " + str(user['friends_count']) + " handles "
             msg += " with " + str(user['statuses_count']) + " tweets located in " + user['location'] + " with " + str(user['favourites_count'])
             msg += " likes and joined on " + str(user['created_at']) + " <break time='1s'/> "
+            if count <= 0:
+                break
     
         msg += "</speak>"
         return build_response({}, build_speechlet_response("", msg, "", True))
@@ -202,11 +216,6 @@ def build_speechlet_response(title, output, reprompt_text, should_end_session):
         "outputSpeech": {
             "type": "SSML",
             "ssml": output
-        },
-        "card": {
-            "type": "Simple",
-            "title": title,
-            "content": output
         },
         "reprompt": {
             "outputSpeech": {
