@@ -1,0 +1,51 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "spelling tutor zip",
+            "intents": [
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "WordSpellingIntent",
+                    "slots": [],
+                    "samples": [
+                        "w o r d"
+                    ]
+                },
+                {
+                    "name": "AppleSpellingIntent",
+                    "slots": [],
+                    "samples": [
+                        "a p p l e"
+                    ]
+                },
+                {
+                    "name": "BallSpellingIntent",
+                    "slots": [],
+                    "samples": [
+                        "b a l l"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}
