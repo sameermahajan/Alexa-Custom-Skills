@@ -85,6 +85,43 @@ To track user-ids — subscribe on an event, notifying that a user turned on/off
 ]
 ```
 
+Your skill's manifest (can be checked by doing ask api get-skill) will now look something like
+
+```
+{
+  "manifest": {
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "arn:aws:lambda:us-east-1:<id>:function:sameer_alexa_test"
+        },
+        "interfaces": []
+      }
+    },
+    "events": {
+      "publications": [
+        {
+          "eventName": "AMAZON.MessageAlert.Activated"
+        },
+        {
+          "eventName": "AMAZON.SportsEvent.Updated"
+        }
+      ],
+      "endpoint": {
+        "uri": "arn:aws:lambda:us-east-1:<id:function:sameer_alexa_test"
+      },
+      "subscriptions": [
+        {
+          "eventName": "SKILL_PROACTIVE_SUBSCRIPTION_CHANGED"
+        }
+      ]
+    },
+    "manifestVersion": "1.0",
+    "permissions": [
+      {
+       ....
+```
+
 You can then handle this event in your lambda e.g. by cataloging this user id etc. The user id should appear in
 
 ```
