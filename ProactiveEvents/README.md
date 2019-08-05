@@ -66,3 +66,33 @@ Developer Console for the Alexa Skill should contain now Client Id and Client Se
 Execute request_bearer_token.py given in this repo to get the bearer token.
 
 ## Send proactive notification
+
+Execute send_aync_notification.py given in this repo to send an async / proactive notification.
+
+At this time you can check your device and read the notification.
+
+## Event audience options
+
+You can use Unicast type to send notification to a specific user id.
+
+To track user-ids — subscribe on an event, notifying that a user turned on/off proactive notifications. To make the skill’s Lambda function receive this event — add following subscription section to the Alexa skill manifest (to the “events” property) and update the manifest with the ASK-CLI
+
+```
+"subscriptions": [
+  {
+    "eventName": "SKILL_PROACTIVE_SUBSCRIPTION_CHANGED"
+  }
+]
+```
+
+You can then handle this event in your lambda e.g. by cataloging this user id etc. The user id should appear in
+
+```
+event.context.System.user.userId
+```
+
+and is something like
+
+```
+amzn1.ask.account.AH...
+```
