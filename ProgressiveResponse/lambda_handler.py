@@ -53,7 +53,7 @@ class SpellingHandler(AbstractRequestHandler):
 
         directive_service_client = handler_input.service_client_factory.get_directive_service()
         directive_service_client.enqueue(directive_request)
-        # Adding a 5 second sleep for testing
+        # Adding a 2 second sleep for testing
         time.sleep(2)
         return handler_input.response_builder.speak(speech_text).response
 
