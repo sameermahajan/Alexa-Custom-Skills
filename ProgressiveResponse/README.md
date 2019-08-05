@@ -20,7 +20,6 @@ cd ..
 
 ## Copy the deployment package to s3
 
-```aws s3 cp my-lambda-deployment-package.zip s3://myfirst-alexa-skill/my-lambda-deployment-package.zip
-```
+aws s3 cp my-lambda-deployment-package.zip s3://myfirst-alexa-skill/my-lambda-deployment-package.zip
 
 upload this package to your lambda and set the Handler to lambda_handler.lambda_handler
