@@ -63,4 +63,6 @@ Developer Console for the Alexa Skill should contain now Client Id and Client Se
 
 ## Request a bearer token
 
+Execute request_bearer_token.py given in this repo to get the bearer token.
 
+## Send proactive notification
