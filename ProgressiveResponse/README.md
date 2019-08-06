@@ -7,7 +7,7 @@ You can read more details at: https://developer.amazon.com/docs/custom-skills/se
 I could not get my python code working using the low level http specification given above initially and I had posted my question on the forum at: 
 https://forums.developer.amazon.com/questions/211582/progressive-response-not-working-with-low-level-ht.html
 
-** Note there is an update to it posted below **
+**Note there is an update to it posted below(Using Pogressive Response without SDK)**
 
 However I could get it working with Python ASK SDK. To use the SDK, you need to create deployment package if you want to use lambda for 
 your skill, as python runtimes provided by lambda do not include this SDK. To do this (say on an ubuntu EC2 instance) do
