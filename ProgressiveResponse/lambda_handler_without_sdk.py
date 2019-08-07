@@ -9,10 +9,18 @@ def lambda_handler(event, context):
         return on_launch(event["request"], event["session"])
     elif event["request"]["type"] == "IntentRequest":
         url = event["context"]["System"]["apiEndpoint"] + '/v1/directives'
-        payload = ("{{\r\n    \"header\":{{\r\n        \t\"requestId\":\"{}\"\r\n        }},\r\n    \"directive\":{{\r\n            \"type\":\"VoicePlayer.Speak\",\r\n            \"speech\":\"<speak>This text is spoken while your skill processes the full response.</speak>\"\r\n        }}\r\n}}").format(event["request"]["requestId"])
+        payload = { 
+                      "header": {
+                          "requestId": event["request"]["requestId"]
+                      },
+                      "directive": {
+                          "type":"VoicePlayer.Speak",
+                          "speech":"<speak>This text is spoken while your skill processes the full response.</speak>"
+                      }
+                  }
         headers = {"Authorization":"Bearer " + event["context"]["System"]["apiAccessToken"], "Content-Type":"application/json"}
         print(("url = {} headers = {} payload = {}").format(url, headers, payload))
-        ret = requests.post(url, data = payload, headers = headers)
+        ret = requests.post(url, json = payload, headers = headers)
         print (("post returned {} r.status_code = {} ret.text = {}").format(ret, ret.status_code, ret.text))
         time.sleep(2)
         return on_intent(event["request"], event["session"])
