@@ -2,7 +2,7 @@ Your skill some time might have to call a back end service that takes some time 
 may want to invoke the service asynchronously. While waiting for its response, you may want to periodically send progressive response 
 to alexa for keeping the user engaged in the dialogue.
 
-## back end service
+## Back End Service
 
 backend_service.py: It is hosted on lambda and faking some processing time by waiting for some time. You need to expose this service as an API endpoint using: https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-lambda.html#api-gateway-proxy-integration-create-lambda-backend
 
