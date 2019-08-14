@@ -4,4 +4,6 @@ to alexa for keeping the user engaged in the dialogue.
 
 ## back end service
 
-backend_service.py: It is hosted on lambda and faking some processing time by waiting for some time.
+backend_service.py: It is hosted on lambda and faking some processing time by waiting for some time. You need to expose this service as an API endpoint using: https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-lambda.html#api-gateway-proxy-integration-create-lambda-backend
+
+
