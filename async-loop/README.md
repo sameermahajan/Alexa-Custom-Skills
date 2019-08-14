@@ -4,4 +4,4 @@ to alexa for keeping the user engaged in the dialogue.
 
 ## back end service
 
-backend_service.py: It is faking some processing time by waiting for some time.
+backend_service.py: It is hosted on lambda and faking some processing time by waiting for some time.
