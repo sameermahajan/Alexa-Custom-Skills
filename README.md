@@ -8,18 +8,18 @@ has lambda based skills in python.
 
 has flask-ask based skills.
 
-## Folder node.js
+## Folder 'node-js'
 
 has lambda based skill in node.js.
 
-## Folder ProactiveEvents
+## Folder 'ProactiveEvents'
 
 describes how to send async notifications / events to alexa using python in lambda.
 
-## Folder ProgressiveResponse
+## Folder 'ProgressiveResponse'
 
 describes how to send progressive response to alexa using python in lambda.
 
-## Folder async-loop
+## Folder 'async-loop'
 
 describes how to make an async call, wait for the response, send progressive response until the final response using python in lambda.
