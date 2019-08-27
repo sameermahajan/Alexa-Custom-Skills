@@ -35,4 +35,5 @@ Here are some other useful blogs:
 - improve discovery of your skill using CanFulfillIntentRequest: 
   * https://developer.amazon.com/blogs/alexa/post/352e9834-0a98-4868-8d94-c2746b794ce9/improve-alexa-skill-discovery-and-name-free-use-of-your-skill-with-canfulfillintentrequest-beta
   * https://developer.amazon.com/docs/custom-skills/implement-canfulfillintentrequest-for-name-free-interaction.html
+  * https://developer.amazon.com/docs/custom-skills/understand-name-free-interaction-for-custom-skills.html
 
