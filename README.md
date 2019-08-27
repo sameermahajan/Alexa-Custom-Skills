@@ -1,3 +1,5 @@
+This is easy to refer compilation of information around alexa custom skill gathered while working on multiple projects.
+
 Custom Skills can be either hosted on AWS lambda or they can be on prem  using flask-ask. 
 
 ## Folder 'lambda' 
@@ -28,6 +30,7 @@ describes how to make an async call, wait for the response, send progressive res
 
 Here are some other useful blogs:
 
+- Alexa Custom Skill Life Cycle: https://medium.com/@sameermahajan/alexa-custom-skill-life-cycle-d26417ae36d9
 - add another user to use your dev skill: https://developer.amazon.com/blogs/alexa/post/Tx2EN8P2AHAHO6Y/how-to-add-beta-testers-to-your-skills-before-you-publish
 - improve discovery of your skill using CanFulfillIntentRequest: 
   * https://developer.amazon.com/blogs/alexa/post/352e9834-0a98-4868-8d94-c2746b794ce9/improve-alexa-skill-discovery-and-name-free-use-of-your-skill-with-canfulfillintentrequest-beta
