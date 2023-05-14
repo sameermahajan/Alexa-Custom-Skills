@@ -10,3 +10,5 @@ pip install flask-ask
 Recent Tweets Custom Skill
 
 Request recent N tweets. Alexa gets these from your twitter account and reads out the user names and content of these to you.
+
+You can put locally running custom skill on internet using https://ngrok.com/ to make it accessible by Alexa.
